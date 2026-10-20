@@ -6,6 +6,7 @@ const page = await browser.newPage({
   viewport: { width: 1440, height: 1000 },
   deviceScaleFactor: 1,
 });
+const base = process.env.SITE_URL || "http://127.0.0.1:5173/Alandis/";
 const errors = [];
 const badResponses = [];
 page.on("pageerror", (e) => errors.push(e.message));
@@ -14,7 +15,7 @@ page.on("response", (r) => {
 });
 await mkdir("artifacts", { recursive: true });
 try {
-  const response = await page.goto("http://127.0.0.1:5173/");
+  const response = await page.goto(base);
   assert.equal(response.status(), 200);
   await page.evaluate(() => document.fonts.ready);
   await page.screenshot({ path: "artifacts/home-desktop.png", fullPage: true });
@@ -35,15 +36,15 @@ try {
     fullPage: true,
   });
   for (let i = 1; i <= 16; i++) {
-    await page.goto(`http://127.0.0.1:5173/atestate-profesionale/${i}`);
+    await page.goto(`${base}#/atestate-profesionale/${i}`);
     await expect(page.locator(".document-content")).toHaveCount(1);
     const doc = await page.request.get(
-      `http://127.0.0.1:5173/documents/${i}.docx`,
+      `${base}documents/${i}.docx`,
     );
     assert.equal(doc.status(), 200);
     assert.equal((await doc.body()).subarray(0, 2).toString(), "PK");
   }
-  await page.goto("http://127.0.0.1:5173/contact?interes=ADR");
+  await page.goto(`${base}#/contact?interes=ADR`);
   await page.getByLabel("Numele tău").fill("Test utilizator");
   await page.getByLabel("Mesajul tău").fill("Doresc informații despre curs.");
   await page.getByRole("button", { name: "Pregătește mesajul" }).click();
@@ -64,7 +65,7 @@ try {
     "/confidentialitate",
     "/pagina-inexistenta",
   ]) {
-    await page.goto("http://127.0.0.1:5173" + route);
+    await page.goto(base + "#" + route);
     await page.evaluate(() => document.fonts.ready);
     await expect(page.locator("h1")).toHaveCount(1);
     assert.ok(
@@ -74,7 +75,7 @@ try {
       `Mobile overflow on ${route}`,
     );
   }
-  await page.goto("http://127.0.0.1:5173/");
+  await page.goto(base);
   await page.screenshot({ path: "artifacts/home-mobile.png", fullPage: true });
   await page.getByRole("button", { name: "Deschide meniul" }).click();
   await page
@@ -83,7 +84,7 @@ try {
     .click();
   await expect(page).toHaveURL(/\/consultanta$/);
   await expect(page.locator("#mobile-nav")).toHaveCount(0);
-  await page.goto("http://127.0.0.1:5173/scoala-de-soferi");
+  await page.goto(`${base}#/scoala-de-soferi`);
   const tip = page.locator(".driving-tips details").nth(1);
   await tip.locator("summary").click();
   assert.ok((await tip.getAttribute("open")) !== null);

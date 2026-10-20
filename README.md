@@ -19,7 +19,7 @@ npm run build
 npm run preview
 ```
 
-Build-ul pentru publicare este generat în `dist/`. Serverul de găzduire trebuie să redirecționeze rutele aplicației către `index.html` (SPA fallback), fără a rescrie fișierele existente.
+Build-ul este generat in `dist/`. Navigarea foloseste hash (`/#/`) pentru compatibilitate cu GitHub Pages.
 
 ## Conținut și funcționalități
 
@@ -65,4 +65,4 @@ Fotografia drumului: [Venti Views / Unsplash](https://unsplash.com/photos/NliTYm
 
 ## GitHub Pages
 
-?n repository, deschide Settings ? Pages ?i selecteaz? **GitHub Actions** la Source. Fiecare push pe `main` verific? ?i public? site-ul la https://Macarieeee.github.io/Alandis/. Pentru rularea local?, folose?te adresa cu `/Alandis/` afi?at? de Vite.
+GitHub Pages este configurat cu GitHub Actions. Fiecare push pe `main` verifica si publica site-ul la https://Macarieeee.github.io/Alandis/. Local, foloseste http://127.0.0.1:5173/Alandis/.
