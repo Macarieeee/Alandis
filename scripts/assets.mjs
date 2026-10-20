@@ -1,0 +1,16 @@
+import {load} from 'cheerio';
+import {writeFile,readFile} from 'node:fs/promises';
+const original = JSON.parse(await readFile('src/data/original.json','utf8'));
+const html=await (await fetch('https://permisatestat.ro/atestate-profesionale/')).text();
+await writeFile('scripts/atestate-source.html',html);
+const $=load(html);
+$('script,style').remove();
+console.log('PANELS', $('.sow-accordion-panel-content').length);
+console.log('TAXA', $('*:contains("TAXA SCOLARIZARE")').last().parent().text().slice(-800));
+original['atestate-profesionale'].fullText = $('.entry-content').text().replace(/\n\s*\n/g,'\n').trim();
+original['atestate-profesionale'].panels=$('.wpsm_panel-body').map((_,el)=>$(el).text().trim()).get();
+console.log(original['atestate-profesionale'].fullText.slice(0,500));
+console.log('PANELS alternative', $('[class*="accordion"]').map((_,e)=>e.attribs.class).get().slice(0,20));
+await writeFile('src/data/original.json',JSON.stringify(original,null,2));
+const imgs=[['hero.jpg','https://images.unsplash.com/photo-1559770968-53924e9b32de?auto=format&fit=crop&w=1600&q=85'],['instructor.png',original.home.images[1]],['classroom.png',original.home.images[0]]];
+await Promise.all(imgs.map(async([name,url])=>{const r=await fetch(url); if(!r.ok) throw new Error(url); await writeFile('public/images/'+name,Buffer.from(await r.arrayBuffer()));}));
