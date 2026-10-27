@@ -46,9 +46,12 @@ import heroImage from "../assets/hero.jpeg";
 import aboutUsImage from "../assets/AboutUs.jpeg";
 
 const phone = "+40771303601";
-const whatsapp = (
-  message = "Bună ziua! Aș dori mai multe informații despre cursurile dumneavoastră.",
-) => `https://wa.me/40771303601?text=${encodeURIComponent(message)}`;
+const additionalPhone = "+40764900841";
+const whatsappUrl = "https://wa.me/message/EALSQY2RMX33J1";
+const whatsapp = (message?: string) =>
+  message
+    ? `https://wa.me/40771303601?text=${encodeURIComponent(message)}`
+    : whatsappUrl;
 const nav = [
   ["/", "Acasă"],
   ["/atestate-profesionale", "Atestate profesionale"],
@@ -256,11 +259,16 @@ function Header() {
       <div className="topbar">
         <div className="container flex items-center justify-between gap-4">
           <span>Un nou drum. Mai multe posibilități.</span>
+          <div className="flex flex-wrap items-center justify-end gap-3">
           <a href={`tel:${phone}`}>
             <Phone size={12} /> Hai să vorbim{" "}
             <span className="topbar-number">0771 303 601</span>
             <ArrowUpRight size={12} />
           </a>
+          <a href={`tel:${additionalPhone}`}>
+            <Phone size={12} /> 0764 900 841
+          </a>
+          </div>
         </div>
       </div>
       <header className="header">
@@ -313,12 +321,11 @@ function WhatsAppIcon({ size = 20 }: { size?: number }) {
   );
 }
 
-// Add the destination URLs here when they are available.
 const footerSocialLinks = [
-  { label: "Instagram", href: "", icon: Instagram },
-  { label: "Facebook", href: "", icon: Facebook },
-  { label: "Google Maps", href: "", icon: MapPin },
-  { label: "WhatsApp", href: "", icon: WhatsAppIcon },
+  { label: "Instagram", href: "https://www.instagram.com/alandis.ro?cplk=MWNqeDVpNWV4YnR0cQ%3D%3D&utm_source=qr", icon: Instagram },
+  { label: "Facebook", href: "https://www.facebook.com/share/14mCWvHjMk1/?mibextid=wwXIfr", icon: Facebook },
+  { label: "Google Maps", href: "https://maps.app.goo.gl/AzHJ7dJac4NBhTa16?g_st=iw", icon: MapPin },
+  { label: "WhatsApp", href: whatsappUrl, icon: WhatsAppIcon },
 ];
 
 function Footer() {
@@ -340,6 +347,10 @@ function Footer() {
             <a className="footer-phone" href="tel:+40730347777">
               <Phone size={17} />
               0730 347 777
+            </a>
+            <a className="footer-phone" href={`tel:${additionalPhone}`}>
+              <Phone size={17} />
+              0764 900 841
             </a>
             <div className="footer-socials" role="group" aria-label="Rețele sociale și locație">
               {footerSocialLinks.map(({ label, href, icon: Icon }) =>
@@ -752,12 +763,16 @@ function Driving() {
             Află detaliile despre înscriere, categorii, documente, program și
             tarife.
           </p>
-          <Button to="/contact?interes=Școala%20de%20șoferi">
+          <Button to="/contact">
             Vreau să mă înscriu
           </Button>
           <a className="aside-phone" href={`tel:${phone}`}>
             <Phone size={16} />
             0771 303 601
+          </a>
+          <a className="aside-phone" href={`tel:${additionalPhone}`}>
+            <Phone size={16} />
+            0764 900 841
           </a>
         </aside>
         <article>
@@ -1122,9 +1137,14 @@ function Consultancy() {
 }
 function Contact() {
   const [params] = useSearchParams();
+  const requestedInterest = params.get("interes");
+  const initialInterest =
+    requestedInterest && requestedInterest !== "Școala de șoferi"
+      ? requestedInterest
+      : "Atestate profesionale";
   const [name, setName] = useState("");
   const [interest, setInterest] = useState(
-    params.get("interes") || "Școala de șoferi",
+    initialInterest,
   );
   const [message, setMessage] = useState("");
   const [ready, setReady] = useState(false);
@@ -1155,6 +1175,16 @@ function Contact() {
             <div>
               <small>SUNĂ-NE</small>
               <strong>0771 303 601</strong>
+            </div>
+            <ArrowUpRight />
+          </a>
+          <a className="contact-method" href={`tel:${additionalPhone}`}>
+            <span className="service-icon">
+              <Phone size={25} />
+            </span>
+            <div>
+              <small>SUNĂ-NE</small>
+              <strong>0764 900 841</strong>
             </div>
             <ArrowUpRight />
           </a>
@@ -1216,10 +1246,9 @@ function Contact() {
               >
                 {Array.from(
                   new Set([
-                    "Școala de șoferi",
                     "Atestate profesionale",
                     "Consultanță",
-                    params.get("interes") || "Alte informații",
+                    initialInterest,
                     "Alte informații",
                   ]),
                 ).map((s) => (
@@ -1302,7 +1331,8 @@ function Privacy() {
         <h2>Contact</h2>
         <p>
           Pentru întrebări despre datele comunicate în conversații,
-          contactează-ne la <a href={`tel:${phone}`}>0771 303 601</a>.
+          contactează-ne la <a href={`tel:${phone}`}>0771 303 601</a> sau{" "}
+          <a href={`tel:${additionalPhone}`}>0764 900 841</a>.
         </p>
       </article>
     </>
