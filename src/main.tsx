@@ -1045,14 +1045,9 @@ function CourseDetail() {
 }
 const consultingGroups = [
   {
-    title: "Autorizare școli și centre de pregătire",
-    icon: BookOpen,
-    range: [1, 8],
-  },
-  {
-    title: "Calificare și reorientare profesională",
-    icon: GraduationCap,
-    range: [8, 17],
+    title: "Inchiriere (Ridesharing) și transport alternativ",
+    icon: RouteIcon,
+    range: [21, 28],
   },
   {
     title: "Autorizare transport în regim de taxi",
@@ -1060,9 +1055,9 @@ const consultingGroups = [
     range: [17, 21],
   },
   {
-    title: "Inchiriere (Ridesharing) și transport alternativ",
-    icon: RouteIcon,
-    range: [21, 28],
+    title: "Calificare și reorientare profesională",
+    icon: GraduationCap,
+    range: [8, 17],
   },
   {
     title: "Consultanță fiscală și contabilitate",
