@@ -1064,11 +1064,6 @@ const consultingGroups = [
     icon: BriefcaseBusiness,
     range: [28, 33],
   },
-  {
-    title: "Consultanță juridică și carieră",
-    icon: ShieldCheck,
-    range: [33, 37],
-  },
 ];
 function Consultancy() {
   return (
