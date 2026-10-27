@@ -46,6 +46,9 @@ import "./styles.css";
 import heroImage from "../assets/hero.jpeg";
 import aboutUsImage from "../assets/AboutUs.jpeg";
 import aboutImage from "../assets/About.jpeg";
+import consultancyIntroImage from "../assets/consultantafirstsection.jpeg";
+import aboutIntroImage from "../assets/aboutfirstsection.jpeg";
+import contactIntroImage from "../assets/contactfirstsection.jpeg";
 
 const phone = "+40771303601";
 const additionalPhone = "+40764900841";
@@ -105,24 +108,24 @@ const courses = [
     icon: GraduationCap,
   },
   {
-    title: "Manager taxi și Inchiriere (Ride-sharing)",
+    title: "Manager taxi și Închiriere (Ride-sharing)",
     category: "Management",
     description:
-      "Atestare pentru managementul transportului în regim de taxi și Inchiriere (Ride-sharing).",
+      "Atestare pentru managementul transportului în regim de taxi și Închiriere (Ride-sharing).",
     icon: BriefcaseBusiness,
   },
   {
     title: "Conducător auto taxi",
-    category: "Taxi și Inchiriere (Ride-sharing)",
+    category: "Taxi și Închiriere (Ride-sharing)",
     description:
       "Pregătire profesională pentru transportul de persoane în regim de taxi.",
     icon: CarFront,
   },
   {
-    title: "Conducător auto Inchiriere (Ride-sharing)",
-    category: "Taxi și Inchiriere (Ride-sharing)",
+    title: "Conducător auto Închiriere (Ride-sharing)",
+    category: "Taxi și Închiriere (Ride-sharing)",
     description:
-      "Atestare pentru transportul de persoane în regim de Inchiriere (Ride-sharing).",
+      "Atestare pentru transportul de persoane în regim de Închiriere (Ride-sharing).",
     icon: CarFront,
   },
   {
@@ -191,9 +194,9 @@ const additionalCourses = [
   },
   {
     id: "vizare-prelungire",
-    title: "Vizare / prelungire atestat Inchiriere (Ride-sharing) / taxi",
-    category: "Taxi și Inchiriere (Ride-sharing)",
-    description: "Informații și sprijin pentru vizarea sau prelungirea atestatului de Inchiriere (Ride-sharing) ori taxi.",
+    title: "Vizare / prelungire atestat Închiriere (Ride-sharing) / taxi",
+    category: "Taxi și Închiriere (Ride-sharing)",
+    description: "Informații și sprijin pentru vizarea sau prelungirea atestatului de Închiriere (Ride-sharing) ori taxi.",
     icon: FileText,
   },
 ];
@@ -432,11 +435,11 @@ function CTA() {
 const faqs = [
   [
     "Ce atestate profesionale pot obține la ALANDIS?",
-    "La ALANDIS oferim cursuri pentru atestate Taxi, Inchiriere (Ride-sharing) (Uber/Bolt), transport marfă și persoane, ADR, manager de transport și alte categorii profesionale. Te ajutăm să alegi cursul potrivit activității tale."
+    "La ALANDIS oferim cursuri pentru atestate Taxi, Închiriere (Ride-sharing) (Uber/Bolt), transport marfă și persoane, ADR, manager de transport și alte categorii profesionale. Te ajutăm să alegi cursul potrivit activității tale."
   ],
   [
     "Ce condiții trebuie să îndeplinesc pentru înscriere?",
-    "Condițiile diferă în funcție de atestatul dorit. De exemplu, pentru Taxi și Inchiriere (Ride-sharing) sunt necesare vârsta minimă de 21 de ani, permisul categoria B de cel puțin 2 ani și îndeplinirea condițiilor legale privind antecedentele și aptitudinea medicală și psihologică."
+    "Condițiile diferă în funcție de atestatul dorit. De exemplu, pentru Taxi și Închiriere (Ride-sharing) sunt necesare vârsta minimă de 21 de ani, permisul categoria B de cel puțin 2 ani și îndeplinirea condițiilor legale privind antecedentele și aptitudinea medicală și psihologică."
   ],
   [
     "Ce documente sunt necesare pentru înscriere?",
@@ -575,8 +578,8 @@ function Home() {
               icon: GraduationCap,
               n: "01",
               title: "Atestate profesionale",
-              text: "Pregatire pentru transport in regim de taxi, Inchiriere (Ride-sharing) , marfa , persoane si alte specializari.",
-              tags: ["Inchiriere (Ride-sharing)", "Taxi", "Manager Transport", "English certificate"],
+              text: "Pregătire pentru transport în regim de taxi, Închiriere (Ride-sharing) , marfă , persoane și alte specializări.",
+              tags: ["Închiriere (Ride-sharing)", "Taxi", "Manager Transport", "English certificate"],
               path: "/atestate-profesionale",
               link: "Descoperă atestatele",
             },
@@ -700,13 +703,18 @@ function PageIntro({
   eyebrow,
   title,
   text,
+  backgroundImage,
 }: {
   eyebrow: string;
   title: string;
   text: string;
+  backgroundImage?: string;
 }) {
   return (
-    <section className="page-intro">
+    <section
+      className="page-intro"
+      style={backgroundImage ? { "--intro-image": `url("${backgroundImage}")` } as React.CSSProperties : undefined}
+    >
       <div className="container">
         <div className="breadcrumb">
           <Link to="/">Acasă</Link>
@@ -734,6 +742,7 @@ function About() {
     <>
       <PageIntro
         eyebrow="Despre noi"
+        backgroundImage={aboutIntroImage}
         title="Învățăm să mergem înainte. Împreună."
         text="Atestate profesionale și consultanță pentru oamenii care își construiesc o carieră în transporturi."
       />
@@ -765,7 +774,7 @@ function About() {
           </p>
           <h2>Atestate adaptate activității tale</h2>
           <p>
-            Oferta noastră include pregătire pentru taxi, Inchiriere (Ride-sharing),
+            Oferta noastră include pregătire pentru taxi, Închiriere (Ride-sharing),
             transport de marfă și transport de persoane, precum și pentru manageri
             de transport. În funcție de specializare, poți găsi cursuri de
             calificare inițială CPI, pregătire periodică CPC, CPP Marfă pentru
@@ -798,7 +807,7 @@ function About() {
           <h2>Consultanță pentru activitatea și afacerea ta</h2>
           <p>
             Pe lângă pregătirea profesională, ALANDIS oferă consultanță pentru
-            transport alternativ și Inchiriere (Ride-sharing), inclusiv pentru
+            transport alternativ și Închiriere (Ride-sharing), inclusiv pentru
             activități pe platforme precum Uber și Bolt, precum și pentru
             autorizarea transportului în regim de taxi. Discutăm despre pașii
             administrativi și documentele necesare în funcție de activitatea
@@ -948,14 +957,14 @@ function Certificates() {
     <>
       <PageIntro
         eyebrow="Atestate profesionale"
-        title="Pregatirea potrivita pentru cariera ta."
-        text="Descopera cursurile Alandis. Gaseste specializarea potrivita, conditiile de inscriere si informatiile despre examen."
+        title="Pregătirea potrivită pentru cariera ta."
+        text="Descoperă cursurile Alandis. Găsește specializarea potrivită, condițiile de înscriere și informațiile despre examen."
       />
       <section className="container section catalog">
         <div className="catalog-heading">
           <div>
             <Eyebrow>ALEGE SPECIALIZAREA</Eyebrow>
-            <h2>Exploreaza cursurile noastre.</h2>
+            <h2>Explorează cursurile noastre.</h2>
           </div>
           <a href="#tarife" onClick={(event) => { event.preventDefault(); document.getElementById("tarife")?.scrollIntoView({ behavior: "smooth" }); }} className="text-link">
             Vezi tarifele <ArrowRight size={17} />
@@ -977,7 +986,7 @@ function Certificates() {
             "Transport marfă",
             "Transport persoane",
             "Management",
-            "Taxi și Inchiriere (Ride-sharing)",
+            "Taxi și Închiriere (Ride-sharing)",
             "Educație",
             "Specializări",
           ].map((c) => (
@@ -1046,7 +1055,7 @@ function Certificates() {
             {[
               ["Manager transport marfă", "450 lei"],
               ["Manager transport persoane", "450 lei"],
-              ["Manager taxi și Inchiriere (Ride-sharing)", "350 lei"],
+              ["Manager taxi și Închiriere (Ride-sharing)", "350 lei"],
               ["Profesor de legislație rutieră", "În curs de actualizare"],
               ["Calificare instructor auto", "În curs de actualizare"],
             ].map(([t, p]) => (
@@ -1153,7 +1162,7 @@ function CourseDetail() {
 }
 const consultingGroups = [
   {
-    title: "Inchiriere (Ride-sharing) și transport alternativ",
+    title: "Închiriere (Ride-sharing) și transport alternativ",
     icon: RouteIcon,
     range: [21, 28],
   },
@@ -1178,6 +1187,7 @@ function Consultancy() {
     <>
       <PageIntro
         eyebrow="Consultanță"
+        backgroundImage={consultancyIntroImage}
         title="Planuri mari. Pași bine îndrumați."
         text="Asistență și autorizare dedicată în transporturi rutiere. De la calificare profesională până la dezvoltarea afacerii tale."
       />
@@ -1246,6 +1256,7 @@ function Contact() {
     <>
       <PageIntro
         eyebrow="Contact"
+        backgroundImage={contactIntroImage}
         title="Orice drum începe cu un „bună”."
         text="Ai o întrebare, un plan sau pur și simplu vrei să știi de unde să începi? Hai să vorbim."
       />

@@ -862,7 +862,7 @@ a.footer-social:hover {
 }
 .page-intro {
   background: linear-gradient(90deg, rgba(0, 0, 0, 0.76), rgba(0, 0, 0, 0.4)),
-    url("../assets/FirstSection.jpeg") center / cover no-repeat;
+    var(--intro-image, url("../assets/FirstSection.jpeg")) center / cover no-repeat;
   color: #ffffff;
   border-bottom: 1px solid #e4e4e4;
   padding: 27px 0 55px;
