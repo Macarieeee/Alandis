@@ -17,6 +17,7 @@ import {
   Menu,
   X,
   Phone,
+  Mail,
   MessageCircle,
   CarFront,
   ShieldCheck,
@@ -44,9 +45,11 @@ import documents from "./data/documents.json";
 import "./styles.css";
 import heroImage from "../assets/hero.jpeg";
 import aboutUsImage from "../assets/AboutUs.jpeg";
+import aboutImage from "../assets/About.jpeg";
 
 const phone = "+40771303601";
 const additionalPhone = "+40764900841";
+const email = "office@alandis.ro";
 const whatsappUrl = "https://wa.me/message/EALSQY2RMX33J1";
 const whatsapp = (message?: string) =>
   message
@@ -272,6 +275,9 @@ function Header() {
           <a href={`tel:${additionalPhone}`}>
             <Phone size={12} /> 0764 900 841
           </a>
+          <a href={`mailto:${email}`}>
+            <Mail size={12} /> {email}
+          </a>
           </div>
         </div>
       </div>
@@ -355,6 +361,10 @@ function Footer() {
             <a className="footer-phone" href={`tel:${additionalPhone}`}>
               <Phone size={17} />
               0764 900 841
+            </a>
+            <a className="footer-phone" href={`mailto:${email}`}>
+              <Mail size={17} />
+              {email}
             </a>
             <div className="footer-socials" role="group" aria-label="Rețele sociale și locație">
               {footerSocialLinks.map(({ label, href, icon: Icon }) =>
@@ -725,23 +735,98 @@ function About() {
       <PageIntro
         eyebrow="Despre noi"
         title="Învățăm să mergem înainte. Împreună."
-        text="Profesionalism, pasiune și răbdare. Pentru un început în care să ai încredere."
+        text="Atestate profesionale și consultanță pentru oamenii care își construiesc o carieră în transporturi."
       />
       <section className="container section reading-layout">
         <aside className="reading-aside">
           <img
-            src={`${import.meta.env.BASE_URL}images/instructor.png`}
+            src={aboutImage}
             alt="Instructor și cursant în timpul pregătirii"
           />
-          <h3>Fiecare șofer a început de undeva.</h3>
-          <p>Noi suntem aici pentru primul tău pas.</p>
+          <h3>Următorul pas în cariera ta începe aici.</h3>
+          <p>Spune-ne ce îți propui. Te ajutăm să alegi pregătirea potrivită.</p>
           <Button to="/contact">Să ne cunoaștem</Button>
         </aside>
         <article className="prose">
-          <h2>Mai mult decât obținerea unui permis</h2>
-          {original.home.paragraphs.slice(1).map((p, i) => (
-            <p key={i}>{p}</p>
-          ))}
+          <h2>ALANDIS — pregătire pentru o carieră în transporturi</h2>
+          <p>
+            În transporturi, fiecare activitate presupune responsabilitate,
+            cunoștințe și o pregătire potrivită. La ALANDIS, îi sprijinim pe cei
+            care vor să înceapă o activitate profesională, să își actualizeze
+            calificările sau să facă următorul pas în carieră. Reunim cursuri
+            pentru atestate profesionale și servicii de consultanță, astfel încât
+            să poți înțelege ce ai de făcut și cum să te pregătești.
+          </p>
+          <p>
+            Ne adresăm atât conducătorilor auto, cât și celor care coordonează
+            activități de transport sau își dezvoltă o afacere în acest domeniu.
+            Pornim de la obiectivul tău și discutăm despre cursul potrivit,
+            documentele necesare și etapele pe care le ai de parcurs.
+          </p>
+          <h2>Atestate adaptate activității tale</h2>
+          <p>
+            Oferta noastră include pregătire pentru taxi, Inchiriere (Ride-sharing),
+            transport de marfă și transport de persoane, precum și pentru manageri
+            de transport. În funcție de specializare, poți găsi cursuri de
+            calificare inițială CPI, pregătire periodică CPC, CPP Marfă pentru
+            transport până în 3.5 tone și informații despre vizarea sau prelungirea
+            atestatelor.
+          </p>
+          <p>
+            Pentru activitățile specializate, catalogul cuprinde ADR pentru colete
+            și cisterne, transport agabaritic, transportul vehiculelor defecte sau
+            avariate și conducerea troleibuzelor. Sunt disponibile și cursuri
+            dedicate celor care doresc să devină instructori de conducere auto
+            sau profesori de legislație rutieră. Te ajutăm să identifici
+            specializarea care corespunde activității pe care vrei să o desfășori.
+          </p>
+          <h2>Îndrumare de la înscriere până la examen</h2>
+          <p>
+            Un început bun înseamnă să știi la ce să te aștepți. Îți oferim
+            informații despre condițiile de înscriere, actele necesare, program,
+            tarife și modul de examinare pentru cursul ales. Pregătirea pentru
+            examen este însoțită de explicații și sprijin pentru organizarea
+            dosarului, astfel încât fiecare etapă să fie mai ușor de urmărit.
+          </p>
+          <p>
+            Punem accent pe comunicare clară, răbdare și înțelegerea
+            responsabilităților profesionale. Pentru cei interesați de pregătire
+            în limba engleză, oferim informații despre cursurile disponibile și
+            modalitatea de participare. Detaliile se stabilesc în funcție de
+            specializarea aleasă și de nevoile cursantului.
+          </p>
+          <h2>Consultanță pentru activitatea și afacerea ta</h2>
+          <p>
+            Pe lângă pregătirea profesională, ALANDIS oferă consultanță pentru
+            transport alternativ și Inchiriere (Ride-sharing), inclusiv pentru
+            activități pe platforme precum Uber și Bolt, precum și pentru
+            autorizarea transportului în regim de taxi. Discutăm despre pașii
+            administrativi și documentele necesare în funcție de activitatea
+            pe care dorești să o organizezi.
+          </p>
+          <p>
+            Serviciile prezentate pe site includ și calificare sau reorientare
+            profesională, consultanță fiscală și contabilitate. Fie că îți
+            pregătești începutul într-un domeniu nou sau ai nevoie de sprijin
+            pentru activitatea curentă, poți discuta cu noi pentru a identifica
+            serviciul potrivit situației tale.
+          </p>
+          <h2>O conversație clară despre următorul tău pas</h2>
+          <p>
+            Credem că alegerea unui curs începe cu întrebările potrivite: ce
+            activitate vrei să desfășori, ce pregătire ai deja și de ce calificare
+            ai nevoie? De aici construim împreună pașii următori, cu informații
+            despre opțiuni și cerințele specifice fiecărei specializări.
+          </p>
+          <p>
+            Ne găsești în București, Piața Valter Mărăcineanu nr. 1–3, Sector 1.
+            Ne poți contacta la <a href={`tel:${phone}`}>0771 303 601</a> sau{" "}
+            <a href={`tel:${additionalPhone}`}>0764 900 841</a>, prin e-mail la{" "}
+            <a href={`mailto:${email}`}>{email}</a> ori pe{" "}
+            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">WhatsApp</a>.
+            Spune-ne ce îți propui, iar noi te ajutăm să găsești pregătirea
+            și sprijinul potrivit pentru următoarea etapă a carierei tale.
+          </p>
         </article>
       </section>
       <CTA />
@@ -777,6 +862,10 @@ function Driving() {
           <a className="aside-phone" href={`tel:${additionalPhone}`}>
             <Phone size={16} />
             0764 900 841
+          </a>
+          <a className="aside-phone" href={`mailto:${email}`}>
+            <Mail size={16} />
+            {email}
           </a>
         </aside>
         <article>
@@ -1192,6 +1281,16 @@ function Contact() {
             </div>
             <ArrowUpRight />
           </a>
+          <a className="contact-method" href={`mailto:${email}`}>
+            <span className="service-icon">
+              <Mail size={25} />
+            </span>
+            <div>
+              <small>SCRIE-NE PE E-MAIL</small>
+              <strong>{email}</strong>
+            </div>
+            <ArrowUpRight />
+          </a>
           <a
             className="contact-method"
             href={whatsapp()}
@@ -1336,7 +1435,8 @@ function Privacy() {
         <p>
           Pentru întrebări despre datele comunicate în conversații,
           contactează-ne la <a href={`tel:${phone}`}>0771 303 601</a> sau{" "}
-          <a href={`tel:${additionalPhone}`}>0764 900 841</a>.
+          <a href={`tel:${additionalPhone}`}>0764 900 841</a> sau prin e-mail la{" "}
+          <a href={`mailto:${email}`}>{email}</a>.
         </p>
       </article>
     </>

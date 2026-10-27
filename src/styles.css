@@ -861,7 +861,9 @@ a.footer-social:hover {
   top: 10px;
 }
 .page-intro {
-  background: #fff7cc;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.76), rgba(0, 0, 0, 0.4)),
+    url("../assets/FirstSection.jpeg") center / cover no-repeat;
+  color: #ffffff;
   border-bottom: 1px solid #e4e4e4;
   padding: 27px 0 55px;
 }
@@ -882,6 +884,10 @@ a.footer-social:hover {
 }
 .page-intro .eyebrow {
   margin-bottom: 19px;
+}
+.page-intro .breadcrumb,
+.page-intro p {
+  color: #f5f5f5;
 }
 .page-intro p {
   max-width: 650px;
