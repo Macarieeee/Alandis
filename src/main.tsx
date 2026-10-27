@@ -194,9 +194,9 @@ const additionalCourses = [
   },
   {
     id: "vizare-prelungire",
-    title: "Vizare / prelungire atestat Închiriere (Ride-sharing) / taxi",
+    title: "Vizare / prelungire atestat Închiriere (Ride-sharing) / TAXI",
     category: "Taxi și Închiriere (Ride-sharing)",
-    description: "Informații și sprijin pentru vizarea sau prelungirea atestatului de Închiriere (Ride-sharing) ori taxi.",
+    description: "Informații și sprijin pentru vizarea sau prelungirea atestatului de Închiriere (Ride-sharing) sau taxi.",
     icon: FileText,
   },
 ];
@@ -1002,9 +1002,15 @@ function Certificates() {
         </div>
         <div className="catalog-language-note">
           <BookOpen size={22} aria-hidden="true" />
-          <div>
-            <h3>Cursuri și în limba engleză</h3>
-            <p>Fiecare curs poate fi susținut în limba engleză.</p>
+          <div className="catalog-language-texts">
+            <div lang="ro">
+              <h3>Cursuri și în limba engleză</h3>
+              <p>Fiecare curs poate fi susținut în limba engleză.</p>
+            </div>
+            <div lang="en">
+              <h3>Courses also available in English</h3>
+              <p>Every course can be taken in English.</p>
+            </div>
           </div>
         </div>
         <div className="course-grid">
@@ -1042,22 +1048,21 @@ function Certificates() {
           <div>
             <Eyebrow>INVESTEȘTE ÎN PREGĂTIREA TA</Eyebrow>
             <h2>Tarife transparente.</h2>
+            <br />
             <p>
-              Taxele de școlarizare publicate pe site-ul original.
-              Contactează-ne pentru confirmarea ofertei actuale.
+              Tarifele afișate includ înscrierea, pregătirea și simularea de examen pentru obținerea atestatului profesional. Pentru detalii despre cursurile disponibile, condițiile de înscriere și documentele necesare, te invităm să ne contactezi.
             </p>
-            <p><strong>Avizul medical și avizul psihologic sunt incluse în preț.</strong></p>
             <Button to="/contact?interes=Atestate%20profesionale">
               Solicită detalii
             </Button>
           </div>
           <div className="price-list">
             {[
-              ["Manager transport marfă", "450 lei"],
-              ["Manager transport persoane", "450 lei"],
-              ["Manager taxi și Închiriere (Ride-sharing)", "350 lei"],
-              ["Profesor de legislație rutieră", "În curs de actualizare"],
-              ["Calificare instructor auto", "În curs de actualizare"],
+              ["Atestat conducător auto închiriere (Ride-sharing)", "200 lei"],
+              ["Atestat conducător auto TAXI", "200 lei"],
+              ["Vizare/Prelungire atestat închiriere (Ride-sharing) / TAXI", "100 lei"],
+              ["Manager închiriere (Ride-sharing) /TAXI", "300 lei"],
+              ["CPP Marfă", "250 lei"],
             ].map(([t, p]) => (
               <div key={t}>
                 <span>{t}</span>

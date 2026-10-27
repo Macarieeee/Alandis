@@ -2060,6 +2060,20 @@ a.footer-social:hover {
   letter-spacing: -0.3px;
   margin-bottom: 5px;
 }
+.catalog-language-note > svg {
+  flex-shrink: 0;
+}
+.catalog-language-texts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px 40px;
+  flex: 1;
+}
+@media (max-width: 640px) {
+  .catalog-language-texts {
+    grid-template-columns: 1fr;
+  }
+}
 .catalog-language-note p {
   font-size: 13px;
   color: #525252;
