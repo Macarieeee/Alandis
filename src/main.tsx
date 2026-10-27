@@ -36,10 +36,14 @@ import {
   Users,
   MapPin,
   CheckCheck,
+  Instagram,
+  Facebook,
 } from "lucide-react";
 import original from "./data/original.json";
 import documents from "./data/documents.json";
 import "./styles.css";
+import heroImage from "../assets/hero.jpeg";
+import aboutUsImage from "../assets/AboutUs.jpeg";
 
 const phone = "+40771303601";
 const whatsapp = (
@@ -47,7 +51,6 @@ const whatsapp = (
 ) => `https://wa.me/40771303601?text=${encodeURIComponent(message)}`;
 const nav = [
   ["/", "Acasă"],
-  ["/scoala-de-soferi", "Școala de șoferi"],
   ["/atestate-profesionale", "Atestate profesionale"],
   ["/consultanta", "Consultanță"],
   ["/contact", "Contact"],
@@ -165,16 +168,43 @@ const courses = [
     icon: Truck,
   },
 ];
+// Keep original course IDs aligned with their existing guides and documents.
+const catalogCourses = [9, 8, 7, 1, 2, 3, 4, 5, 6, 10, 11, 12, 13, 14, 15, 16].map((id) => ({
+  ...courses[id - 1],
+  id: String(id),
+  href: `/atestate-profesionale/${id}`,
+}));
+const additionalCourses = [
+  {
+    id: "cpp",
+    title: "CPP",
+    category: "Specializări",
+    description: "Contactează-ne pentru detalii despre cursul CPP, înscriere și program.",
+    icon: GraduationCap,
+  },
+  {
+    id: "vizare-prelungire",
+    title: "Vizare / prelungire atestat închiriere / taxi",
+    category: "Taxi și închiriere",
+    description: "Informații și sprijin pentru vizarea sau prelungirea atestatului de închiriere ori taxi.",
+    icon: FileText,
+  },
+];
+catalogCourses.push(...additionalCourses.map((course) => ({
+  ...course,
+  href: `/contact?interes=${encodeURIComponent(course.title)}`,
+})));
+
 function Logo() {
   return (
-    <Link className="logo" to="/" aria-label="Permis Atestat — Acasă">
-      <span className="logo-symbol">
-        <RouteIcon size={27} />
-      </span>
-      <span>
-        permis<span className="logo-light">atestat</span>
-        <small>DRUMUL TĂU ÎNCEPE AICI</small>
-      </span>
+    <Link className="logo" to="/" aria-label="Alandis — Acasă">
+      <img
+        className="logo-image"
+        src={`${import.meta.env.BASE_URL}images/logo.jpeg`}
+        alt="Alandis — Școală de atestate auto"
+        width={2048}
+        height={683}
+      />
     </Link>
   );
 }
@@ -274,6 +304,23 @@ function Header() {
     </>
   );
 }
+function WhatsAppIcon({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M21 11.5a9 9 0 0 1-13.4 7.9L3 21l1.6-4.6A9 9 0 1 1 21 11.5Z" />
+      <path d="m8 7 2 3-1.2 1.2a8 8 0 0 0 4 4L14 14l3 2c-1 2-3 2-5 1-3-1.5-5-3.5-6-6-.7-2 0-3 2-4Z" transform="translate(1 -1) scale(.9)" />
+    </svg>
+  );
+}
+
+// Add the destination URLs here when they are available.
+const footerSocialLinks = [
+  { label: "Instagram", href: "", icon: Instagram },
+  { label: "Facebook", href: "", icon: Facebook },
+  { label: "Google Maps", href: "", icon: MapPin },
+  { label: "WhatsApp", href: "", icon: WhatsAppIcon },
+];
+
 function Footer() {
   return (
     <footer>
@@ -282,14 +329,31 @@ function Footer() {
           <div>
             <Logo />
             <p>
-              Mai mult decât un permis.
+              Școală de atestate auto
               <br />
-              Încredere pentru fiecare drum.
+              <strong>La volanul propriului viitor.</strong>
+              <span className="footer-address">
+                <MapPin size={17} aria-hidden="true" />
+                <span>Piața Valter Mărăcineanu nr. 1–3, Sector 1, București</span>
+              </span>
             </p>
-            <a className="footer-phone" href={`tel:${phone}`}>
+            <a className="footer-phone" href="tel:+40730347777">
               <Phone size={17} />
-              0771 303 601
+              0730 347 777
             </a>
+            <div className="footer-socials" role="group" aria-label="Rețele sociale și locație">
+              {footerSocialLinks.map(({ label, href, icon: Icon }) =>
+                href ? (
+                  <a key={label} className="footer-social" href={href} target="_blank" rel="noopener noreferrer" aria-label={label} title={label}>
+                    <Icon size={20} />
+                  </a>
+                ) : (
+                  <span key={label} className="footer-social" role="img" aria-label={label} title={label}>
+                    <Icon size={20} />
+                  </span>
+                ),
+              )}
+            </div>
           </div>
           <div>
             <h3>Descoperă</h3>
@@ -328,9 +392,9 @@ function CTA() {
     <section className="container cta-wrap">
       <div className="cta">
         <div>
-          <Eyebrow>PRIMUL PAS ÎȚI APARȚINE</Eyebrow>
-          <h2>Destinația ta. Pregătirea noastră.</h2>
-          <p>Spune-ne unde vrei să ajungi. Găsim împreună drumul potrivit.</p>
+          <Eyebrow>URMĂTORUL PAS ÎNCEPE AICI</Eyebrow>
+          <h2>Pregătit pentru următorul pas?</h2>
+          <p>Alege atestatul profesional potrivit, iar noi te ghidăm de la înscriere până la examen.</p>
         </div>
         <Button to="/contact" light>
           Hai să vorbim
@@ -342,21 +406,21 @@ function CTA() {
 }
 const faqs = [
   [
-    "Cum încep școala de șoferi?",
-    "Primul pas este să ne contactezi. Discutăm despre obiectivul tău și îți comunicăm detaliile despre înscriere, documentele necesare, program și costuri.",
+    "Ce atestate profesionale pot obține la ALANDIS?",
+    "La ALANDIS oferim cursuri pentru atestate Taxi, Ride Sharing (Uber/Bolt), transport marfă și persoane, ADR, manager de transport și alte categorii profesionale. Te ajutăm să alegi cursul potrivit activității tale."
   ],
   [
-    "Unde găsesc documentele pentru atestate?",
-    "În secțiunea Atestate profesionale găsești 16 ghiduri. Alege specializarea pentru a citi informațiile despre condiții, pregătire și examinare sau pentru a descărca documentul original.",
+    "Ce condiții trebuie să îndeplinesc pentru înscriere?",
+    "Condițiile diferă în funcție de atestatul dorit. De exemplu, pentru Taxi și Ride Sharing sunt necesare vârsta minimă de 21 de ani, permisul categoria B de cel puțin 2 ani și îndeplinirea condițiilor legale privind antecedentele și aptitudinea medicală și psihologică."
   ],
   [
-    "Oferiți și pregătire profesională periodică?",
-    "Da. În oferta prezentată sunt incluse pregătirea periodică CPC și actualizarea cunoștințelor managerilor de transport. Detaliile sunt disponibile în ghidul fiecărei specializări.",
+    "Ce documente sunt necesare pentru înscriere?",
+    "Documentele diferă în funcție de curs și pot include actul de identitate, permisul de conducere și documentele de cazier. Îți comunicăm lista exactă înainte de înscriere."
   ],
   [
-    "Mă puteți ajuta cu autorizarea unei afaceri în transport?",
-    "Serviciile de consultanță includ autorizări pentru școli de șoferi și centre de pregătire, taxi, închiriere și transport alternativ, precum și asistență fiscală și juridică.",
-  ],
+    "Cum mă pot înscrie la ALANDIS?",
+    "Ne contactezi telefonic sau pe WhatsApp, ne spui ce atestat dorești, iar noi îți explicăm condițiile, programul, costurile și pașii necesari pentru înscriere."
+  ]
 ];
 function FAQ() {
   return (
@@ -394,21 +458,16 @@ function Home() {
         <div className="hero-copy">
           <Eyebrow>ȘCOALĂ DE ȘOFERI & ATESTATE PROFESIONALE</Eyebrow>
           <h1>
-            La volan.
+            La volanul 
+
             <br />
-            În carieră.
-            <br />
-            <span>Mereu înainte.</span>
+            <span>Propriului viitor.</span>
           </h1>
           <p>
-            Fie că faci primul pas spre permis sau următorul pas în carieră,
-            suntem alături de tine. Cu răbdare, pregătire și încredere.
+            Obține atestatul profesional de care ai nevoie, cu pregătire de calitate, informații clare și sprijin pe tot parcursul procesului.
           </p>
           <div className="hero-actions">
-            <Button to="/scoala-de-soferi">Descoperă școala de șoferi</Button>
-            <Link className="text-link" to="/atestate-profesionale">
-              Vreau un atestat <ArrowUpRight size={17} />
-            </Link>
+            <Button to="/atestate-profesionale">Vreau un atestat</Button>
           </div>
           <div className="hero-assurance">
             <span className="mini-icon">
@@ -429,8 +488,8 @@ function Home() {
         </div>
         <div className="hero-image">
           <img
-            src={`${import.meta.env.BASE_URL}images/hero.jpg`}
-            alt="Un drum sinuos printr-o pădure verde, văzut de sus"
+            src={heroImage}
+            alt="Drum sinuos printr-o pădure cu frunziș auriu, văzut de sus"
             fetchPriority="high"
           />
           <div className="hero-image-top">
@@ -448,16 +507,6 @@ function Home() {
             <span className="round-arrow">
               <ArrowUpRight size={30} />
             </span>
-          </div>
-          <div className="floating-card">
-            <span className="mini-icon">
-              <CarFront size={25} />
-            </span>
-            <div>
-              <strong>Mai mult decât un permis.</strong>
-              <span>Libertatea de a merge mai departe.</span>
-            </div>
-            <Check size={17} />
           </div>
           <span className="image-index">01 / UN NOU ÎNCEPUT</span>
         </div>
@@ -491,33 +540,24 @@ function Home() {
             </h2>
           </div>
           <p>
-            De la primele ore de condus la o carieră în transporturi. Tot ce ai
-            nevoie, într-un singur loc.
+            Atestate profesionale și consultanță pentru cariera ta în
+            transporturi. Tot ce ai nevoie, într-un singur loc.
           </p>
         </div>
         <div className="service-grid">
           {[
             {
-              icon: CarFront,
-              n: "01",
-              title: "Școala de șoferi",
-              text: "Învață să conduci cu încredere. Teorie, practică și obiceiuri bune care rămân cu tine.",
-              tags: ["Pregătire teoretică", "Conduită preventivă"],
-              path: "/scoala-de-soferi",
-              link: "Primul pas spre permis",
-            },
-            {
               icon: GraduationCap,
-              n: "02",
+              n: "01",
               title: "Atestate profesionale",
-              text: "Deschide noi oportunități. Pregătire pentru transport marfă, persoane și specializări.",
-              tags: ["CPI & CPC", "ADR", "Manager transport"],
+              text: "Pregatire pentru transport in regim de taxi, inchiriere (ride-sharing) , marfa , persoane si alte specializari.",
+              tags: ["Inchiriere", "Taxi| Manager Transport", "English certificate"],
               path: "/atestate-profesionale",
               link: "Descoperă atestatele",
             },
             {
               icon: BriefcaseBusiness,
-              n: "03",
+              n: "02",
               title: "Consultanță",
               text: "Transformă planurile în pași clari. Asistență pentru autorizare, calificare și afacerea ta.",
               tags: ["Autorizări", "Transport alternativ"],
@@ -551,8 +591,8 @@ function Home() {
         <div className="container about-layout">
           <div className="about-visual">
             <img
-              src={`${import.meta.env.BASE_URL}images/instructor.png`}
-              alt="Pregătire practică la volan, alături de instructor"
+              src={aboutUsImage}
+              alt="Consultant ALANDIS explică unui cursant documentele pentru atestare"
               loading="lazy"
             />
             <div className="about-note">
@@ -565,34 +605,27 @@ function Home() {
             </div>
           </div>
           <div>
-            <Eyebrow>OAMENI, ÎNAINTE DE TOATE</Eyebrow>
-            <h2>
-              Nu trebuie să știi deja.
-              <br />
-              De aceea suntem aici.
-            </h2>
+            <Eyebrow>DESPRE ALANDIS</Eyebrow>
+            <h2>Pregătirea potrivită. Sprijin la fiecare pas.</h2>
             <p>
-              Fiecare viitor șofer are propriul ritm, propriile întrebări și
-              propriile emoții. Misiunea noastră este să te înțelegem și să îți
-              explicăm, pas cu pas, ceea ce ai nevoie să înveți.
-            </p>
-            <p>
-              Dincolo de promovarea examenului, ne dorim să devii un șofer calm,
-              responsabil și atent la ceilalți.
+              La ALANDIS, știm că obținerea unui atestat profesional trebuie
+              să fie un proces clar și bine organizat. De aceea, îți oferim
+              pregătire specializată, informații complete și îndrumare de la
+              înscriere până la examen.
             </p>
             <div className="about-checks">
               <span>
-                <Check size={16} /> Învățare adaptată personalității tale
+                <Check size={16} /> Pregătire pentru examen
               </span>
               <span>
-                <Check size={16} /> Noțiuni practice pentru situații reale
+                <Check size={16} /> Asistență pentru documentele necesare
               </span>
               <span>
-                <Check size={16} /> Susținere pe tot parcursul pregătirii
+                <Check size={16} /> Comunicare clară și îndrumare
               </span>
             </div>
             <Link className="text-link" to="/despre-noi">
-              Cunoaște-ne mai bine <ArrowUpRight size={18} />
+              Cunoaște ALANDIS <ArrowUpRight size={18} />
             </Link>
           </div>
         </div>
@@ -600,29 +633,29 @@ function Home() {
       <section className="container section">
         <div className="section-top">
           <div>
-            <Eyebrow>PAS CU PAS, ÎMPREUNĂ</Eyebrow>
-            <h2>Un început mai simplu decât crezi.</h2>
+            <Eyebrow>SIMPLU, DE LA ÎNCEPUT</Eyebrow>
+            <h2>Trei pași către atestatul tău profesional.</h2>
           </div>
           <Link to="/contact" className="text-link">
-            Începe cu o conversație <ArrowUpRight size={18} />
+            Începe înscrierea <ArrowUpRight size={18} />
           </Link>
         </div>
         <div className="steps">
           {[
             [
               "01",
-              "Ne cunoaștem",
-              "Ne spui ce îți dorești, iar noi îți explicăm opțiunile și pașii de urmat.",
+              "Ne contactezi",
+              "Ne spui ce atestat îți dorești, iar noi îți explicăm condițiile și documentele necesare.",
             ],
             [
               "02",
-              "Te pregătești",
-              "Construiești cunoștințe și deprinderi, cu îndrumare și explicații clare.",
+              "Te înscrii și te pregătești",
+              "Te ajutăm cu înscrierea și parcurgi pregătirea pentru examen.",
             ],
             [
               "03",
-              "Mergi mai departe",
-              "Te prezinți la examen cu pregătirea necesară pentru următoarea etapă.",
+              "Susții examenul",
+              "Îți explicăm pașii necesari pentru examen și obținerea atestatului.",
             ],
           ].map(([n, t, d]) => (
             <div key={n}>
@@ -788,9 +821,7 @@ function Certificates() {
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .toLowerCase();
-  const filtered = courses
-    .map((c, i) => ({ ...c, id: i + 1 }))
-    .filter(
+  const filtered = catalogCourses.filter(
       (c) =>
         (category === "Toate" || c.category === category) &&
         normalize(c.title + " " + c.description).includes(normalize(query)),
@@ -809,14 +840,14 @@ function Certificates() {
     <>
       <PageIntro
         eyebrow="Atestate profesionale"
-        title="Următorul nivel în cariera ta."
-        text="16 ghiduri de pregătire profesională. Găsește specializarea potrivită, condițiile de înscriere și informațiile despre examen."
+        title="Pregatirea potrivita pentru cariera ta."
+        text="Descopera cursurile Alandis. Gaseste specializarew potrivita, conditiile de inscriere si informatiile despre examen."
       />
       <section className="container section catalog">
         <div className="catalog-heading">
           <div>
             <Eyebrow>ALEGE SPECIALIZAREA</Eyebrow>
-            <h2>Pregătit pentru mai mult.</h2>
+            <h2>Exploreaza cursurile noastre.</h2>
           </div>
           <a href="#tarife" onClick={(event) => { event.preventDefault(); document.getElementById("tarife")?.scrollIntoView({ behavior: "smooth" }); }} className="text-link">
             Vezi tarifele <ArrowRight size={17} />
@@ -831,7 +862,6 @@ function Certificates() {
             placeholder="Caută un atestat: ADR, manager, transport…"
             aria-label="Caută atestate"
           />
-          <span>16 specializări</span>
         </label>
         <div className="filters" aria-label="Filtrează atestatele">
           {[
@@ -853,18 +883,19 @@ function Certificates() {
             </button>
           ))}
         </div>
-        <p className="result-count" aria-live="polite">
-          {filtered.length}{" "}
-          {filtered.length === 1
-            ? "specializare disponibilă"
-            : "specializări disponibile"}
-        </p>
+        <div className="catalog-language-note">
+          <BookOpen size={22} aria-hidden="true" />
+          <div>
+            <h3>Cursuri și în limba engleză</h3>
+            <p>Fiecare curs poate fi susținut în limba engleză.</p>
+          </div>
+        </div>
         <div className="course-grid">
           {filtered.map((c) => (
             <Link
               className="course-card"
               key={c.id}
-              to={`/atestate-profesionale/${c.id}`}
+              to={c.href}
             >
               <div className="flex justify-between items-center">
                 <span className="service-icon">
@@ -875,7 +906,7 @@ function Certificates() {
               <h3>{c.title}</h3>
               <p>{c.description}</p>
               <span className="service-link">
-                Condiții, documente și examen <ArrowUpRight size={19} />
+                Vezi detalii <ArrowUpRight size={19} />
               </span>
             </Link>
           ))}
@@ -898,6 +929,7 @@ function Certificates() {
               Taxele de școlarizare publicate pe site-ul original.
               Contactează-ne pentru confirmarea ofertei actuale.
             </p>
+            <p><strong>Avizul medical și avizul psihologic sunt incluse în preț.</strong></p>
             <Button to="/contact?interes=Atestate%20profesionale">
               Solicită detalii
             </Button>
