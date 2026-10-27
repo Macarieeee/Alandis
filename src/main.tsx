@@ -56,6 +56,7 @@ const nav = [
   ["/", "Acasă"],
   ["/atestate-profesionale", "Atestate profesionale"],
   ["/consultanta", "Consultanță"],
+  ["/despre-noi", "Despre noi"],
   ["/contact", "Contact"],
 ];
 const courses = [
@@ -101,24 +102,24 @@ const courses = [
     icon: GraduationCap,
   },
   {
-    title: "Manager taxi și Inchiriere (Ridesharing)",
+    title: "Manager taxi și Inchiriere (Ride-sharing)",
     category: "Management",
     description:
-      "Atestare pentru managementul transportului în regim de taxi și Inchiriere (Ridesharing).",
+      "Atestare pentru managementul transportului în regim de taxi și Inchiriere (Ride-sharing).",
     icon: BriefcaseBusiness,
   },
   {
     title: "Conducător auto taxi",
-    category: "Taxi și Inchiriere (Ridesharing)",
+    category: "Taxi și Inchiriere (Ride-sharing)",
     description:
       "Pregătire profesională pentru transportul de persoane în regim de taxi.",
     icon: CarFront,
   },
   {
-    title: "Conducător auto Inchiriere (Ridesharing)",
-    category: "Taxi și Inchiriere (Ridesharing)",
+    title: "Conducător auto Inchiriere (Ride-sharing)",
+    category: "Taxi și Inchiriere (Ride-sharing)",
     description:
-      "Atestare pentru transportul de persoane în regim de Inchiriere (Ridesharing).",
+      "Atestare pentru transportul de persoane în regim de Inchiriere (Ride-sharing).",
     icon: CarFront,
   },
   {
@@ -180,16 +181,16 @@ const catalogCourses = [9, 8, 7, 1, 2, 3, 4, 5, 6, 10, 11, 12, 13, 14, 15, 16].m
 const additionalCourses = [
   {
     id: "cpp",
-    title: "CPP",
+    title: "CPP Marfă - până în 3.5 tone",
     category: "Specializări",
     description: "Contactează-ne pentru detalii despre cursul CPP, înscriere și program.",
     icon: GraduationCap,
   },
   {
     id: "vizare-prelungire",
-    title: "Vizare / prelungire atestat Inchiriere (Ridesharing) / taxi",
-    category: "Taxi și Inchiriere (Ridesharing)",
-    description: "Informații și sprijin pentru vizarea sau prelungirea atestatului de Inchiriere (Ridesharing) ori taxi.",
+    title: "Vizare / prelungire atestat Inchiriere (Ride-sharing) / taxi",
+    category: "Taxi și Inchiriere (Ride-sharing)",
+    description: "Informații și sprijin pentru vizarea sau prelungirea atestatului de Inchiriere (Ride-sharing) ori taxi.",
     icon: FileText,
   },
 ];
@@ -197,16 +198,19 @@ catalogCourses.push(...additionalCourses.map((course) => ({
   ...course,
   href: `/contact?interes=${encodeURIComponent(course.title)}`,
 })));
+// Display order is independent of the IDs used for course guides.
+const catalogOrder = ["9", "8", "7", "vizare-prelungire", "cpp", "2", "10", "13", "14", "1", "3", "4", "5", "6", "11", "12", "15", "16"];
+catalogCourses.sort((a, b) => catalogOrder.indexOf(a.id) - catalogOrder.indexOf(b.id));
 
 function Logo() {
   return (
     <Link className="logo" to="/" aria-label="Alandis — Acasă">
       <img
         className="logo-image"
-        src={`${import.meta.env.BASE_URL}images/logo.jpeg`}
+        src={`${import.meta.env.BASE_URL}images/logo.png`}
         alt="Alandis — Școală de atestate auto"
-        width={2048}
-        height={683}
+        width={2172}
+        height={724}
       />
     </Link>
   );
@@ -418,11 +422,11 @@ function CTA() {
 const faqs = [
   [
     "Ce atestate profesionale pot obține la ALANDIS?",
-    "La ALANDIS oferim cursuri pentru atestate Taxi, Inchiriere (Ridesharing) (Uber/Bolt), transport marfă și persoane, ADR, manager de transport și alte categorii profesionale. Te ajutăm să alegi cursul potrivit activității tale."
+    "La ALANDIS oferim cursuri pentru atestate Taxi, Inchiriere (Ride-sharing) (Uber/Bolt), transport marfă și persoane, ADR, manager de transport și alte categorii profesionale. Te ajutăm să alegi cursul potrivit activității tale."
   ],
   [
     "Ce condiții trebuie să îndeplinesc pentru înscriere?",
-    "Condițiile diferă în funcție de atestatul dorit. De exemplu, pentru Taxi și Inchiriere (Ridesharing) sunt necesare vârsta minimă de 21 de ani, permisul categoria B de cel puțin 2 ani și îndeplinirea condițiilor legale privind antecedentele și aptitudinea medicală și psihologică."
+    "Condițiile diferă în funcție de atestatul dorit. De exemplu, pentru Taxi și Inchiriere (Ride-sharing) sunt necesare vârsta minimă de 21 de ani, permisul categoria B de cel puțin 2 ani și îndeplinirea condițiilor legale privind antecedentele și aptitudinea medicală și psihologică."
   ],
   [
     "Ce documente sunt necesare pentru înscriere?",
@@ -561,8 +565,8 @@ function Home() {
               icon: GraduationCap,
               n: "01",
               title: "Atestate profesionale",
-              text: "Pregatire pentru transport in regim de taxi, Inchiriere (Ridesharing) , marfa , persoane si alte specializari.",
-              tags: ["Inchiriere (Ridesharing)", "Taxi", "Manager Transport", "English certificate"],
+              text: "Pregatire pentru transport in regim de taxi, Inchiriere (Ride-sharing) , marfa , persoane si alte specializari.",
+              tags: ["Inchiriere (Ride-sharing)", "Taxi", "Manager Transport", "English certificate"],
               path: "/atestate-profesionale",
               link: "Descoperă atestatele",
             },
@@ -856,7 +860,7 @@ function Certificates() {
       <PageIntro
         eyebrow="Atestate profesionale"
         title="Pregatirea potrivita pentru cariera ta."
-        text="Descopera cursurile Alandis. Gaseste specializarew potrivita, conditiile de inscriere si informatiile despre examen."
+        text="Descopera cursurile Alandis. Gaseste specializarea potrivita, conditiile de inscriere si informatiile despre examen."
       />
       <section className="container section catalog">
         <div className="catalog-heading">
@@ -884,7 +888,7 @@ function Certificates() {
             "Transport marfă",
             "Transport persoane",
             "Management",
-            "Taxi și Inchiriere (Ridesharing)",
+            "Taxi și Inchiriere (Ride-sharing)",
             "Educație",
             "Specializări",
           ].map((c) => (
@@ -953,7 +957,7 @@ function Certificates() {
             {[
               ["Manager transport marfă", "450 lei"],
               ["Manager transport persoane", "450 lei"],
-              ["Manager taxi și Inchiriere (Ridesharing)", "350 lei"],
+              ["Manager taxi și Inchiriere (Ride-sharing)", "350 lei"],
               ["Profesor de legislație rutieră", "În curs de actualizare"],
               ["Calificare instructor auto", "În curs de actualizare"],
             ].map(([t, p]) => (
@@ -1060,7 +1064,7 @@ function CourseDetail() {
 }
 const consultingGroups = [
   {
-    title: "Inchiriere (Ridesharing) și transport alternativ",
+    title: "Inchiriere (Ride-sharing) și transport alternativ",
     icon: RouteIcon,
     range: [21, 28],
   },
