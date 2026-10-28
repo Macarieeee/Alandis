@@ -1,0 +1,40 @@
+import { chromium, expect } from '@playwright/test';
+import assert from 'node:assert/strict';
+const browser = await chromium.launch({ channel: 'msedge', headless: true });
+const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+const errors = [];
+page.on('pageerror', error => errors.push(error.message));
+let calls = [];
+let mode = 'error';
+await page.route('**/api/contact.php', async route => {
+  calls.push(route.request().postDataJSON());
+  await new Promise(resolve => setTimeout(resolve, 200));
+  await route.fulfill({ status: mode === 'error' ? 502 : 200, contentType: 'application/json', body: mode === 'error' ? '{"error":"provider unavailable"}' : '{"ok":true}' });
+});
+try {
+  await page.goto((process.env.SITE_URL || 'http://127.0.0.1:5173/') + '#/contact');
+  const submit = page.getByRole('button', { name: 'Trimite solicitarea' });
+  await page.getByRole('textbox', { name: 'Numele tău' }).fill('Ana Ștefan');
+  await submit.click();
+  assert.equal(calls.length, 0, 'missing phone blocks submit');
+  await page.getByRole('textbox', { name: 'Numărul de telefon' }).fill('abc');
+  await submit.click();
+  assert.equal(calls.length, 0, 'invalid phone blocks submit');
+  await page.getByRole('textbox', { name: 'Numărul de telefon' }).fill('0764 900 841');
+  await page.getByRole('textbox', { name: 'Mesajul tău' }).fill('Detalii despre curs, vă rog.');
+  await submit.click();
+  await expect(page.getByRole('button', { name: 'Se trimite' })).toBeDisabled();
+  await expect(page.getByRole('alert')).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Numele tău' })).toHaveValue('Ana Ștefan');
+  mode = 'success';
+  await submit.click();
+  await expect(page.getByRole('status')).toContainText('Solicitarea a fost transmisă');
+  assert.equal(calls.length, 2);
+  assert.equal(calls[0].requestId, calls[1].requestId, 'retry retains idempotency ID');
+  assert.equal(calls[1].phone, '0764 900 841');
+  assert.equal(calls[1].website, '');
+  await expect(page.getByRole('textbox', { name: 'Numele tău' })).toHaveValue('');
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, 'mobile no overflow');
+  assert.deepEqual(errors, []);
+  console.log('PASS: phone validation, request, loading, error, retry, success and mobile layout (mocked API; no email sent).');
+} finally { await browser.close(); }

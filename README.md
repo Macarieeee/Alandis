@@ -19,7 +19,7 @@ npm run build
 npm run preview
 ```
 
-Build-ul este generat in `dist/`. Navigarea foloseste hash (`/#/`) pentru compatibilitate cu GitHub Pages.
+Build-ul este generat în `dist/`. Navigarea folosește hash (`/#/`) și nu necesită reguli de rescriere pe hosting.
 
 ## Conținut și funcționalități
 
@@ -28,7 +28,7 @@ Build-ul este generat in `dist/`. Navigarea foloseste hash (`/#/`) pentru compat
 - Școala de șoferi: conduită preventivă și toate recomandările din pagina originală.
 - Atestate: 16 specializări, căutare fără diferențierea diacriticelor, filtre cu stare în URL, pagini de ghid, toate cele 16 documente DOCX descărcabile, tarife și text integral din secțiunile expandabile originale.
 - Consultanță: toate serviciile originale, reorganizate în șase grupuri.
-- Contact: telefon, WhatsApp și formular care compune mesajul pentru WhatsApp. Nu simulează trimiterea și nu necesită backend.
+- Contact: telefon, e-mail, WhatsApp și formular cu trimitere prin PHP + Resend.
 - Confidențialitate, pagină 404, navigare mobilă, focus vizibil, link de salt la conținut și suport pentru reducerea mișcării.
 
 ## Date și limitări
@@ -39,7 +39,7 @@ Tarifele și textele normative sunt păstrate din sursă, nu reprezintă o rever
 
 Pagina originală de contact nu conține adresă, e-mail sau program. Numărul `+40771303601` provine din configurarea publică a butonului WhatsApp al site-ului. Nu au fost inventate date de contact, categorii oferite, statistici sau testimoniale.
 
-Formularul păstrează datele doar în starea paginii. Trimiterea efectivă se face de utilizator în WhatsApp. Nu există conturi, baze de date, plăți sau serviciu de e-mail. Publicarea este configurat? prin GitHub Actions.
+Formularul păstrează datele în memoria paginii până la trimiterea către endpointul PHP. Resend expediază solicitarea către ALANDIS. Nu există conturi, baze de date sau plăți online. Publicarea se face manual în cPanel.
 
 ## Verificare în browser
 
@@ -49,7 +49,7 @@ Cu serverul de dezvoltare pornit pe `http://127.0.0.1:5173`:
 node scripts/check-ui.mjs
 ```
 
-Scriptul folosește Playwright și Microsoft Edge instalat local (`channel: msedge`). Verifică rutele, cele 16 documente, filtrele, căutarea, starea fără rezultate, compunerea mesajului WhatsApp, meniul mobil, secțiunile expandabile, depășirea lățimii ecranului și erorile de browser. Capturile sunt salvate în `artifacts/`.
+`check-ui.mjs` este scriptul istoric al interfeței și conține așteptări pentru catalogul și formularul anterior. Pentru formularul actual, rulează `node scripts/check-contact.mjs`; acesta folosește Playwright și Microsoft Edge, verifică validarea, erorile, reîncercarea și succesul prin răspunsuri API simulate. Testele PHP rulează cu `php -n tests/contact-api.php`.
 
 ## Fișiere principale
 
@@ -63,6 +63,10 @@ Scriptul folosește Playwright și Microsoft Edge instalat local (`channel: msed
 
 Fotografia drumului: [Venti Views / Unsplash](https://unsplash.com/photos/NliTYm_jD5o). Imaginile de pregătire și imaginile arhivate provin de pe site-ul original. Fontul Manrope este servit local, cu licența SIL Open Font License în `public/fonts/OFL.txt`. Pictograme: Lucide.
 
-## GitHub Pages
+## Publicare în cPanel și formular Resend
 
-GitHub Pages este configurat cu GitHub Actions. Fiecare push pe `main` verifica si publica site-ul la https://Macarieeee.github.io/Alandis/. Local, foloseste http://127.0.0.1:5173/Alandis/.
+Instrucțiunile actuale sunt în [deployment/RESEND-CPANEL.md](deployment/RESEND-CPANEL.md). Încarcă prin FileZilla conținutul `dist` în document root-ul domeniului. Build-ul folosește `/`, iar navigarea rămâne cu hash. Local, folosește `http://127.0.0.1:5173/`.
+
+Formularul din `src/ContactForm.tsx` trimite prin `public/api/contact.php` către Resend și apoi la `office@alandis.ro`. Serverul necesită PHP 8.1+ cu cURL. Configurația privată se instalează în afara `public_html`, folosind modelul `deployment/resend.config.example.php`. Nu introduce cheia API în sursele frontend.
+
+GitHub Actions rulează doar verificările și build-ul; nu mai publică pe GitHub Pages. Trimiterea reală nu funcționează prin serverul Vite, care nu execută PHP. Testul `node scripts/check-contact.mjs` simulează API-ul fără trimitere de e-mailuri.

@@ -1,4 +1,7 @@
 @import "tailwindcss";
+.contact-honeypot { display: none; }
+.contact-error { color: #a12020; }
+.contact-form button:disabled { opacity: 0.65; cursor: wait; }
 @theme {
   --color-brand-black: #171717;
   --color-brand-yellow: #facc15;
@@ -251,8 +254,19 @@ html {
   letter-spacing: -3.7px;
 }
 .hero h1 > span {
+  position: relative;
+  display: inline-block;
   color: #171717;
-  background: linear-gradient(transparent 65%, #facc15 65%);
+}
+.hero h1 > span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -15px;
+  width: 100%;
+  height: 22px;
+  pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 220' preserveAspectRatio='none'%3E%3Cpath d='M 3 190 C 12 120 150 40 230 40 S 530 205 650 205 S 940 110 997 5' fill='none' stroke='%23facc15' stroke-width='1.5' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
 }
 .hero-copy > p {
   font-size: 15px;
@@ -832,7 +846,7 @@ a.footer-social:hover {
 .whatsapp-float {
   position: fixed;
   right: 24px;
-  bottom: 22px;
+  bottom: calc(22px + env(safe-area-inset-bottom, 0px));
   z-index: 25;
   display: flex;
   align-items: center;
@@ -848,6 +862,49 @@ a.footer-social:hover {
 }
 .whatsapp-float:hover {
   background: #333333;
+}
+.language-switcher {
+  position: fixed;
+  left: 24px;
+  bottom: calc(22px + env(safe-area-inset-bottom, 0px));
+  z-index: 25;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 4px;
+  border: 1px solid #e5e5e5;
+  border-radius: 50px;
+  background: #fff;
+  box-shadow: 0 5px 22px #17171720;
+}
+.language-switcher button {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 50px;
+  background: transparent;
+  color: #525252;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.language-switcher button[aria-pressed="true"] {
+  background: #facc15;
+  color: #171717;
+}
+.language-switcher button:hover {
+  background: #fef3c7;
+  color: #171717;
+}
+.language-switcher button:focus-visible {
+  outline: 2px solid #171717;
+  outline-offset: 2px;
+}
+.language-switcher > span {
+  width: 1px;
+  height: 14px;
+  background: #e5e5e5;
 }
 .skip-link {
   position: fixed;
@@ -1012,15 +1069,6 @@ a.footer-social:hover {
   color: #666666;
   font-size: 14px;
   line-height: 1.9;
-}
-.source-note {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  font-size: 11px;
-  line-height: 1.8;
-  color: #666666;
-  margin-top: 26px;
 }
 .catalog-heading {
   display: flex;
@@ -1846,7 +1894,11 @@ a.footer-social:hover {
   .whatsapp-float {
     padding: 13px;
     right: 16px;
-    bottom: 16px;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  }
+  .language-switcher {
+    left: 16px;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
   }
   .whatsapp-float span {
     display: none;
@@ -1984,9 +2036,6 @@ a.footer-social:hover {
   }
   .full-source > .prose {
     padding: 0 18px 18px;
-  }
-  .source-note {
-    font-size: 10px;
   }
   .consulting-grid {
     grid-template-columns: 1fr;
