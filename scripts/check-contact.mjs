@@ -12,7 +12,7 @@ await page.route('**/api/contact.php', async route => {
   await route.fulfill({ status: mode === 'error' ? 502 : 200, contentType: 'application/json', body: mode === 'error' ? '{"error":"provider unavailable"}' : '{"ok":true}' });
 });
 try {
-  await page.goto((process.env.SITE_URL || 'http://127.0.0.1:5173/') + '#/contact');
+  await page.goto((process.env.SITE_URL || 'http://127.0.0.1:5173/') + 'contact');
   const submit = page.getByRole('button', { name: 'Trimite solicitarea' });
   await page.getByRole('textbox', { name: 'Numele tău' }).fill('Ana Ștefan');
   await submit.click();

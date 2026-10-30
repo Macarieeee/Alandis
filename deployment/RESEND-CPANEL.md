@@ -52,11 +52,11 @@ npm run build
 
 Încarcă **conținutul** folderului `dist` în rădăcina web a domeniului (`public_html` în cazul standard), nu folderul `dist` ca subfolder. Vite include automat `api/contact.php` în build. Nu încărca sursele, `node_modules`, `deployment`, `artifacts` sau fișierul cu cheia în `public_html`.
 
-Build-ul folosește `/`, nu `/Alandis/`. Rutele rămân `/#/contact`, `/#/consultanta` etc.; nu este nevoie de reguli SPA în `.htaccess`. Dacă există un `index.php` al site-ului anterior, verifică împreună cu hostingul ce fișier este servit implicit înainte de înlocuire; păstrează o copie de siguranță a site-ului anterior.
+Build-ul folosește `/`, nu `/Alandis/`. Rutele sunt `/contact`, `/consultanta` etc. Încarcă și fișierul ascuns `.htaccess` din `dist`: acesta permite accesarea directă și reîncărcarea paginilor prin Apache `mod_rewrite`. Regulile păstrează accesul normal la fișiere, directoare, API și aplicația separată `/atestate`. Dacă există deja un `.htaccess` pe hosting, păstrează o copie și integrează regulile proiectului cu directivele PHP/HTTPS ale hostingului. `DirectoryIndex` prioritizează `index.html` pentru acest site; păstrează o copie de siguranță a site-ului anterior.
 
 ## 4. Verificare după configurare
 
-1. Deschide `https://alandis.ro/#/contact` și trimite o solicitare de test cu propriul număr. Câmpul telefon este obligatoriu.
+1. Deschide `https://alandis.ro/contact` și trimite o solicitare de test cu propriul număr. Câmpul telefon este obligatoriu.
 2. Confirmă că apare „Solicitarea a fost transmisă”. Aceasta înseamnă că Resend a acceptat expedierea, nu că mesajul a fost deja livrat în inbox.
 3. În **Resend → Emails**, verifică evenimentul **Delivered**, apoi inboxul și Spam pentru `office@alandis.ro`. Mesajul trebuie să conțină numele, telefonul, serviciul și textul introdus.
 4. Testează și de pe telefon. Un mesaj eșuat păstrează datele pentru reîncercare; o retrimitere a aceleiași solicitări folosește aceeași cheie de idempotență cât timp pagina rămâne deschisă și câmpurile nu se schimbă.

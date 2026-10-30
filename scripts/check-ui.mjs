@@ -36,7 +36,7 @@ try {
     fullPage: true,
   });
   for (let i = 1; i <= 16; i++) {
-    await page.goto(`${base}#/atestate-profesionale/${i}`);
+    await page.goto(`${base}atestate-profesionale/${i}`);
     await expect(page.locator(".document-content")).toHaveCount(1);
     const doc = await page.request.get(
       `${base}documents/${i}.docx`,
@@ -44,7 +44,7 @@ try {
     assert.equal(doc.status(), 200);
     assert.equal((await doc.body()).subarray(0, 2).toString(), "PK");
   }
-  await page.goto(`${base}#/contact?interes=ADR`);
+  await page.goto(`${base}contact?interes=ADR`);
   await page.getByLabel("Numele tău").fill("Test utilizator");
   await page.getByLabel("Mesajul tău").fill("Doresc informații despre curs.");
   await page.getByRole("button", { name: "Pregătește mesajul" }).click();
@@ -84,7 +84,7 @@ try {
     .click();
   await expect(page).toHaveURL(/\/consultanta$/);
   await expect(page.locator("#mobile-nav")).toHaveCount(0);
-  await page.goto(`${base}#/scoala-de-soferi`);
+  await page.goto(`${base}scoala-de-soferi`);
   const tip = page.locator(".driving-tips details").nth(1);
   await tip.locator("summary").click();
   assert.ok((await tip.getAttribute("open")) !== null);

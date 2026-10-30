@@ -19,7 +19,9 @@ npm run build
 npm run preview
 ```
 
-Build-ul este generat în `dist/`. Navigarea folosește hash (`/#/`) și nu necesită reguli de rescriere pe hosting.
+Build-ul este generat în `dist/`. Navigarea folosește adrese fără hash, precum `/contact`. Fișierul `public/.htaccess`, copiat automat în `dist/`, permite accesarea directă și reîncărcarea paginilor pe Apache/cPanel. Încarcă și acest fișier ascuns pe hosting.
+
+Pentru verificarea codului și regenerarea folderului `dist/`, rulează `npm run deploy`. Comanda pregătește fișierele local; pentru actualizarea site-ului public, încarcă apoi conținutul folderului `dist/` pe hosting prin FileZilla.
 
 ## Conținut și funcționalități
 
@@ -65,7 +67,7 @@ Fotografia drumului: [Venti Views / Unsplash](https://unsplash.com/photos/NliTYm
 
 ## Publicare în cPanel și formular Resend
 
-Instrucțiunile actuale sunt în [deployment/RESEND-CPANEL.md](deployment/RESEND-CPANEL.md). Încarcă prin FileZilla conținutul `dist` în document root-ul domeniului. Build-ul folosește `/`, iar navigarea rămâne cu hash. Local, folosește `http://127.0.0.1:5173/`.
+Instrucțiunile actuale sunt în [deployment/RESEND-CPANEL.md](deployment/RESEND-CPANEL.md). Încarcă prin FileZilla conținutul `dist` în document root-ul domeniului, inclusiv fișierul ascuns `.htaccess`, necesar navigării fără hash. Local, folosește `http://127.0.0.1:5173/`.
 
 Formularul din `src/ContactForm.tsx` trimite prin `public/api/contact.php` către Resend și apoi la `office@alandis.ro`. Serverul necesită PHP 8.1+ cu cURL. Configurația privată se instalează în afara `public_html`, folosind modelul `deployment/resend.config.example.php`. Nu introduce cheia API în sursele frontend.
 

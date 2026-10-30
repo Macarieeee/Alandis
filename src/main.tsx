@@ -2,7 +2,7 @@ import { useLanguage, LanguageProvider, LanguageSwitcher } from "./i18n";
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import {
-  HashRouter,
+  BrowserRouter,
   Routes,
   Route,
   NavLink,
@@ -752,7 +752,7 @@ function About() {
           <p>{tr("Credem că alegerea unui curs începe cu întrebările potrivite: ce activitate vrei să desfășori, ce pregătire ai deja și de ce calificare ai nevoie? De aici construim împreună pașii următori, cu informații despre opțiuni și cerințele specifice fiecărei specializări.")}</p>
           <p>{tr("Ne găsești în București, Piața Valter Mărăcineanu nr. 1–3, Sector 1. Ne poți contacta la")}{" "}<a href={`tel:${phone}`}>0771 303 601</a>{" "}{tr("sau")}{" "}
             <a href={`tel:${additionalPhone}`}>0764 900 841</a>{tr(", prin e-mail la")}{" "}
-            <a href={`mailto:${email}`}>{email}</a>{" "}{tr("ori pe")}{" "}
+            <a href={`mailto:${email}`}>{email}</a>{" "}{tr("sau pe")}{" "}
             <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">{tr("WhatsApp")}</a>{tr(". Spune-ne ce îți propui, iar noi te ajutăm să găsești pregătirea și sprijinul potrivit pentru următoarea etapă a carierei tale.")}</p>
         </article>
       </section>
@@ -1268,8 +1268,8 @@ function App() {
 }
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <HashRouter>
+    <BrowserRouter>
       <LanguageProvider><App /></LanguageProvider>
-    </HashRouter>
+    </BrowserRouter>
   </React.StrictMode>,
 );

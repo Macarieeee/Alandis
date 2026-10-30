@@ -25,7 +25,7 @@ test("all routes and course paragraphs render in English, with English downloads
   await page.goto("/");
   await page.getByRole("button", { name: "English", exact: true }).click();
   for (const route of ["/", "/despre-noi", "/scoala-de-soferi", "/consultanta", "/atestate-profesionale", "/contact", "/confidentialitate", "/termeni-si-conditii", "/missing", ...documents.map(doc => `/atestate-profesionale/${doc.id}`)]) {
-    await page.goto(`/#${route}`);
+    await page.goto(`${route}`);
     await expect(page.locator("h1")).toBeVisible();
     const text = await page.locator("body").innerText();
     // Proper nouns in the postal address are intentionally retained.
@@ -33,7 +33,7 @@ test("all routes and course paragraphs render in English, with English downloads
   }
   const dictionary = english as Record<string, string>;
   for (const doc of documents) {
-    await page.goto(`/#/atestate-profesionale/${doc.id}`);
+    await page.goto(`/atestate-profesionale/${doc.id}`);
     const expected = doc.paragraphs.map(p => dictionary[p.replace(/\s+/g, " ").trim()]);
     expect(expected.every(Boolean)).toBeTruthy();
     await expect(page.locator(".document-content > h2, .document-content > p")).toHaveText(expected);
@@ -47,7 +47,7 @@ test("all routes and course paragraphs render in English, with English downloads
 });
 
 test("English search and category filters work with stable Romanian URL values", async ({ page }) => {
-  await page.goto("/#/atestate-profesionale");
+  await page.goto("/atestate-profesionale");
   await page.getByRole("button", { name: "English", exact: true }).click();
   await page.getByRole("searchbox").fill("freight");
   await expect(page.locator(".course-card")).toHaveCount(4);
@@ -65,7 +65,7 @@ test("English search and category filters work with stable Romanian URL values",
 });
 
 test("form values survive language changes and success and errors are translated", async ({ page }) => {
-  await page.goto("/#/contact?interes=Conduc%C4%83tor%20auto%20taxi");
+  await page.goto("/contact?interes=Conduc%C4%83tor%20auto%20taxi");
   await page.locator('[name="name"]').fill("Test User");
   await page.locator('[name="phone"]').fill("0712345678");
   await page.locator('[name="message"]').fill("Test message");

@@ -1,0 +1,14 @@
+DirectoryIndex index.html index.php
+
+RewriteEngine On
+
+# Keep API requests and the separate online testing application on the server.
+RewriteRule ^(?:api|atestate)(?:/|$) - [L]
+
+# Serve existing files and directories normally.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Let React handle direct links and page refreshes.
+RewriteRule ^ index.html [L]
